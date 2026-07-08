@@ -1,11 +1,22 @@
+from pathlib import Path
+
 import pytest
 
-from src.pages.main_page import MainPage
+from src.browser.browser_launcher import BrowserLauncher
+from src.pages.base_page import BasePage
 
+config_yaml_path = Path(__file__).parent.parent / "config_browser.yaml"
 
 @pytest.fixture
-def main_page(page):
-    return MainPage(page)
+def browser():
+    brw = BrowserLauncher(config_yaml_path)
+    new_page = brw.create_page()
+    yield new_page
+    brw.close()
+
+@pytest.fixture
+def main_page(browser):
+    return BasePage(browser)
 
 
 

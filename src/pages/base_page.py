@@ -1,17 +1,22 @@
 import allure
 from playwright.sync_api import Page, expect
 
+from src.browser.browser import Browser
+from src.helper.urls import BASE_URL
 
-class MainPage:
-    def __init__(self, page: Page):
+
+class BasePage:
+    def __init__(self, page: Page, url= BASE_URL):
         self.page = page
+        self.url = url
+        self.browser = Browser(page)
         self.element_head_title = self.page.locator(
             "//h1[contains(text(),'Business Payments Made Simple')]"
         )
 
     def open(self):
-        with allure.step("Открыть базовую страницу"):
-            self.page.goto("/", timeout=120000)
+        with allure.step("Открыть страницу по URL"):
+            self.browser.go_to_url(self.url)
 
     @allure.step("Проверить, что на странице отображается тайтл")
     def check_title(self):
