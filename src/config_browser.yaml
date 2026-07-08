@@ -3,3 +3,6 @@ launch:
   channel: "chromium"
   headless: False
 context:
+  viewport:
+    width: 1280
+    height: 800
