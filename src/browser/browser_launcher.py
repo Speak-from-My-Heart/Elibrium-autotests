@@ -7,6 +7,7 @@ class BrowserLauncher:
     def __init__(self, local_browser_config_path= None):
         self.config = None
         self._load_config(local_browser_config_path)
+        self.context = None
         self.browser = None
         self.playwright = sync_playwright().start()
         self._launch()
@@ -41,8 +42,9 @@ class BrowserLauncher:
             context_params.update(self.config["context"])
             
         context_params.update(kwargs)
+        self.context = self.browser.new_context(**context_params)
 
-        return self.browser.new_context(**context_params)
+        return self.context
 
     def create_page(self, **kwargs):
         #Создает обьект page
