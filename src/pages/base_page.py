@@ -15,7 +15,7 @@ class BasePage:
         )
 
     def open(self):
-        with allure.step("Открыть страницу по URL"):
+        with allure.step(f"Открыть страницу по URL: {self.url}"):
             self.browser.go_to_url(self.url)
 
     @allure.step("Проверить, что на странице отображается тайтл")
@@ -25,3 +25,4 @@ class BasePage:
     @allure.step("Проверить, что на главной странице отображается заголовок")
     def element_is_visible(self):
         expect(self.element_head_title).to_be_visible()
+
