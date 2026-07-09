@@ -4,6 +4,7 @@ import pytest
 
 from src.browser.browser_launcher import BrowserLauncher
 from src.pages.base_page import BasePage
+from src.pages.virtual_cards_page import VirtualCardsPage
 
 config_yaml_path = Path(__file__).parent.parent / "config_browser.yaml"
 
@@ -21,6 +22,10 @@ def browser(request):
 @pytest.fixture
 def main_page(browser):
     return BasePage(browser)
+
+@pytest.fixture
+def virtual_cards_page(browser):
+    return VirtualCardsPage(browser)
 
 
 

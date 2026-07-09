@@ -6,13 +6,13 @@ from playwright.sync_api import Page, expect
 
 class Base(ABC):
     # Базовый класс элементов
-    def __init__(self, page: Page, selector: str = None, value: str = None, allure_name=None):
+    def __init__(self, page: Page, selector: str = None, allure_name=None):
         self.page = page
-        self.value = value
+        self.selector = selector
         self.allure_name = allure_name
 
         if self.selector:
-            self._element = self.page.locator(self.value)
+            self._element = self.page.locator(self.selector)
         else:
             raise ValueError("Не указан локатор элмента")
 
@@ -41,7 +41,7 @@ class Base(ABC):
         else:
             status_element = "Невидимый"
         with allure.step (f"Ждем, что элемент {self._element} - {status_element}"):
-            expect(self._element).wait_for(state=state,timeout=timeout_msec)
+            self._element.wait_for(state=state,timeout=timeout_msec)
 
     def is_enabled(self):
         with allure.step(f"Проверим что элемент {self._element} включен"):
